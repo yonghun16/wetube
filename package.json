@@ -17,7 +17,8 @@
   },
   "homepage": "https://github.com/yonghun16/wetube#readme",
   "dependencies": {
-    "express": "^4.21.2"
+    "express": "^4.21.2",
+    "morgan": "^1.10.0"
   },
   "devDependencies": {
     "@babel/cli": "^7.26.4",
