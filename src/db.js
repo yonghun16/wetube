@@ -9,3 +9,5 @@ const handleError = (error) => console.log("❌ DB Connection Error", error);
 
 db.on("error", handleError);
 db.once("open", handleOpen);
+
+
