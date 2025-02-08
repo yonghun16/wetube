@@ -3,7 +3,6 @@ import Video from "../models/Video";
 export const home = async (req, res) => {
   try {
     const videos = await Video.find({});
-    console.log(videos);
     return res.render("home", { pageTitle: "Home", videos: videos });
   } catch (error) {
     console.error("errors:", error);
@@ -35,12 +34,10 @@ export const postEdit = async (req, res) => {
   if (!video) {
     return res.render("404", { pageTitle: "Video not found" });
   }
-  await Video.findOneAndUpdate( { _id: id}, {
+  await Video.findOneAndUpdate({ _id: id }, {
     title,
     description,
-    hashtags: hashtags
-      .split(",")
-      .map((word) => (word.startsWith("#") ? word : `#${word}`))
+    hashtags: Video.formatHashtags(hashtags),
   });
   //await video.save();
   return res.redirect(`/videos/${id}`);
@@ -56,7 +53,7 @@ export const postUpload = async (req, res) => {
     await Video.create({
       title,
       description,
-      hashtags,
+      hashtags: Video.formatHashtags(hashtags),
     });
     //await video.save();
     return res.redirect("/");
