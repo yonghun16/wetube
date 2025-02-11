@@ -4,6 +4,7 @@ import session from "express-session"
 import rootRouter from "./routers/rootRouter"
 import userRouter from "./routers/userRouter"
 import videoRouter from "./routers/videoRouter"
+import { localsMiddleware } from "./middlewares"
 
 
 const app = express()
@@ -16,12 +17,14 @@ app.set("views", process.cwd() + "/src/views")
 app.use(logger)
 app.use(express.urlencoded({ extended: true }))
 
+// session 미들웨어
 app.use(session({
   secret: "Hello!", 
   resave: true,
   saveUninitialized: true
 }))
 
+app.use(localsMiddleware)  // local 미들웨어
 app.use("/", rootRouter)
 app.use("/videos", videoRouter)
 app.use("/users", userRouter)

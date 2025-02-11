@@ -72,14 +72,13 @@ export const postLogin = async (req, res) => {
       errorMessage: "Worng password"
     });
   }
-  console.log("LOG USER IN! COMING SOON!");
+  // 문제가 없다면 -> req.세션에 정보 추가
+  req.session.loggedIn = true;
+  req.session.user = user;
   return res.redirect("/");
 }
 
 export const edit = (req, res) => res.send("Edit User");
 export const remove = (req, res) => res.send("Remove User");
-
 export const logout = (req, res) => res.send("Logout");
-
 export const see = (req, res) => res.send("See User");
-
