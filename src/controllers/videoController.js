@@ -56,7 +56,7 @@ export const postUpload = async (req, res) => {
       hashtags: Video.formatHashtags(hashtags),
     });
     //await video.save();
-    return res.redirect("/");
+    return res.redirec,("/");
   } catch (error) {
     return res.render("upload", {
       pageTitle: "Upload Video",
