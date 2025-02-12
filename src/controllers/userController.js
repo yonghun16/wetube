@@ -72,9 +72,9 @@ export const postLogin = async (req, res) => {
       errorMessage: "Worng password"
     });
   }
-  // 문제가 없다면 -> req.세션에 정보 추가
-  req.session.loggedIn = true;
-  req.session.user = user;
+  // 문제가 없다면 -> req.session에 정보 추가
+  req.session.loggedIn = true;  // 로그인 유지
+  req.session.user = user;      // 유저이름 
   return res.redirect("/");
 }
 
