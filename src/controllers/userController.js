@@ -49,11 +49,11 @@ export const postJoin = async (req, res) => {
   }
 };
 
-// get 로그인
+// 로그인(get controller)
 export const getLogin = (req, res) =>
   res.render("login", { pageTitle: "Login" });
 
-// post 로그인
+// 로그인(post controller : non social login)
 export const postLogin = async (req, res) => {
   const { username, password } = req.body;
   const pageTitle = "Login";
@@ -79,7 +79,8 @@ export const postLogin = async (req, res) => {
   return res.redirect("/");
 }
 
-// Github 로그인 컨트롤러
+// 로그인 (social login)
+// github 인증 controller
 export const startGithubLogin = (req, res) => {
   const baseUrl = "https://github.com/login/oauth/authorize";
   const config = {
@@ -93,6 +94,7 @@ export const startGithubLogin = (req, res) => {
   return res.redirect(finalUrl);
 }
 
+// git 인증 후 로그인 결정
 export const finishGithubLogin = async (req, res) => {
   const baseUrl = "https://github.com/login/oauth/access_token";
   const config = {
@@ -102,6 +104,7 @@ export const finishGithubLogin = async (req, res) => {
   };
   const params = new URLSearchParams(config).toString();
   const finalUrl = `${baseUrl}?${params}`;
+  // token을 요청(request)
   const tokenRequest = await (
     await fetch(finalUrl, {
       method: "POST",
@@ -111,7 +114,7 @@ export const finishGithubLogin = async (req, res) => {
     })
   ).json();
 
-  // access_token가 있는지 확인 있다면 로그인
+  // access_token이 있는지 확인 있다면 -> 로그인 허가
   if ("access_token" in tokenRequest) {
     const { access_token } = tokenRequest;
     const apiUrl = "https://api.github.com";
@@ -136,6 +139,8 @@ export const finishGithubLogin = async (req, res) => {
     if (!emailObj) {
       return res.render("login");
     }
+
+    // emailObj는 있으나, db에 동일한 email이 없다면, user 새로 만들기 
     let user = await User.findOne({ email: emailObj.email });
     if (!user) {
       user = await User.create({
@@ -152,16 +157,24 @@ export const finishGithubLogin = async (req, res) => {
     req.session.user = user;
     return res.redirect("/");
   }
-  // access_token가 없다면, 로그인 불허
+  // access_token가 없다면 -> 로그인 불허
   else {
     return res.render("login");
   }
 };
 
-export const edit = (req, res) => res.send("Edit User");
+export const getEdit = (req, res) => {
+  return res.render("edit-profile", { pageTitle: "Edit Profile" });
+}
+export const postEdit = (req, res) => {
+  return res.render("edit-profile");
+}
+
 export const remove = (req, res) => res.send("Remove User");
+
 export const logout = (req, res) => {
   req.session.destroy();
   return res.redirect("/");
 }
+
 export const see = (req, res) => res.send("See User");
