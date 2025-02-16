@@ -181,7 +181,7 @@ export const postEdit = async (req, res) => {
       username,
       location
     },
-    { 
+    {
       new: true   // 새로 바뀐 데이터로 반환
     }
   )
@@ -194,6 +194,53 @@ export const remove = (req, res) => res.send("Remove User");
 export const logout = (req, res) => {
   req.session.destroy();
   return res.redirect("/");
+}
+
+export const getChangePassword = (req, res) => {
+  if (req.session.user.socialOnly === true) {
+    return res.redirect("/");
+  }
+  return res.render("users/change-password", { pageTitle: "Change Password" });
+}
+
+export const postChangePassword = async (req, res) => {
+  // req객체에서 _id와 password를 수집
+  // req.session.user.password → password 변수에 저장
+  // req.body.oldPassword → oldPassword 변수에 저장
+  const {
+    session: {
+      user: { _id, password }
+    },
+    body: { oldPassword, newPassword, newPasswordConfirmation },
+  } = req;
+
+  // 입력한 oldPassword를 해시화 해서 db에 저장된 password 비교
+  const ok = await bcrypt.compare(oldPassword, password);
+
+  // Old Password가 일치하는지 확인
+  if (!ok) {
+    return res.status(400).render("users/change-password", {
+      pageTitle: "Change Password",
+      errorMessage: "The current password is incorrect",
+    });
+  }
+
+  // New Password와 New Password Confirmation가 일치하는지 확인
+  if (newPassword !== newPasswordConfirmation) {
+    return res.status(400).render("users/change-password", {
+      pageTitle: "Change Password",
+      errorMessage: "New Password does not match",
+    });
+  }
+  const user = await User.findById(_id);
+  user.password = newPassword;
+  // user.save()의 middleware로 bcrypt.hash가 있어 save()만 해도 암호화
+  await user.save()
+
+  // session 업데이트(비밀번호를 연속해서 다시 고칠 경우 등 고려)
+  req.session.user.password = user.password;
+
+  return res.redirect("/users/logout");
 }
 
 export const see = (req, res) => res.send("See User");
