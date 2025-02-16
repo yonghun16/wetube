@@ -166,8 +166,27 @@ export const finishGithubLogin = async (req, res) => {
 export const getEdit = (req, res) => {
   return res.render("edit-profile", { pageTitle: "Edit Profile" });
 }
-export const postEdit = (req, res) => {
-  return res.render("edit-profile");
+export const postEdit = async (req, res) => {
+  const {
+    session: {
+      user: { _id }
+    },
+    body: { name, email, username, location },
+  } = req;
+  const updatedUser = await User.findByIdAndUpdate(
+    _id,
+    {
+      name,
+      email,
+      username,
+      location
+    },
+    { 
+      new: true   // 새로 바뀐 데이터로 반환
+    }
+  )
+  req.session.user = updatedUser;   // 세션 업데이트(프론트는 세션에서 정보를 받음)
+  return res.redirect("/users/edit");
 }
 
 export const remove = (req, res) => res.send("Remove User");
