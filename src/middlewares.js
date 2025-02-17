@@ -1,3 +1,5 @@
+import multer from "multer";
+
 export const localsMiddleware = (req, res, next) => {
   // local object는 global이라서 pug 템플릿과 공유됨
   res.locals.loggedIn = Boolean(req.session.loggedIn);
@@ -23,3 +25,5 @@ export const publicOnlyMiddleware = (req, res, next) => {
     return res.redirect("/");
   }
 }
+
+export const uploadFiles = multer({ dest: "uploads/" });
