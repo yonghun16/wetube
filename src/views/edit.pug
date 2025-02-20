@@ -3,7 +3,7 @@ extends base
 block content
   h4 Update Video
   form(method="POST")
-    input(name="title", placehoder="Video Title", value=video.title, required)
-    input(placeholder="Description", required, type="text", name="description", maxlength="200", value=video.description)
-    input(placeholder="Hashtags separated by a comma.", required, type="text", name="hashtags", value=video.hashtags.join())
+    input(name="title", type="text", placeholder="Video Title", value=video.title, required)
+    input(name="description", type="text", placeholder="Description", maxlength="200", value=video.description, required )
+    input(name="hashtags", type="text", placeholder="Hashtags separated by a comma.", value=video.hashtags.join(), required)
     input(value="Save", type="submit")

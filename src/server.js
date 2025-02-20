@@ -28,6 +28,7 @@ app.use(session({
 }))
 
 app.use(localsMiddleware)  // local 미들웨어
+app.use("/uploads", express.static("uploads")) // uploads 폴더에 있는 파일을 클라이언트가 직접 접근할 수 있도록 함.
 app.use("/", rootRouter)
 app.use("/videos", videoRouter)
 app.use("/users", userRouter)
