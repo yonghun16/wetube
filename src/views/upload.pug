@@ -3,8 +3,10 @@ extends base
 block content
   if errorMessage
     span=errorMessage
-  form(method="POST")
-    input(placeholder="Title", required, type="text", name="title", maxlength="20")
-    input(placeholder="Description", required, type="text", name="description", maxlength="200")
-    input(placeholder="Hashtags separated by a comma.", required, type="text", name="hashtags")
+  form(method="POST" enctype="multipart/form-data")
+    label(for="video") Upload File
+    input(type="file", name="video", id="video", accept="video/*", required)
+    input(type="text", name="title", placeholder="Title", required, maxlength="20")
+    input(type="text", name="description", placeholder="Description", required, maxlength="200")
+    input(type="text", name="hashtags", placeholder="Hashtags separated by a comma.", required)
     input(type="submit", value="Upload Video")
