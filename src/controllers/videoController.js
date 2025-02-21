@@ -1,4 +1,5 @@
 import Video from "../models/Video";
+import User from "../models/User";
 
 export const home = async (req, res) => {
   try {
@@ -13,10 +14,11 @@ export const home = async (req, res) => {
 export const watch = async (req, res) => {
   const { id } = req.params;
   const video = await Video.findById(id);
+  const owner = await User.findById(video.owner);
   if (!video) {
     return res.status(404).render("404", { pageTitle: "Video not found" });
   }
-  return res.render("watch", { pageTitle: video.title, video });
+  return res.render("watch", { pageTitle: video.title, video, owner });
 };
 
 // video Edit controller
@@ -52,6 +54,9 @@ export const getUpload = (req, res) => {
 }
 
 export const postUpload = async (req, res) => {
+  const { 
+    user: { _id } 
+  } = req.session;
   const { path: fileUrl } = req.file;
   const { title, description, hashtags } = req.body;
   try {
@@ -59,6 +64,7 @@ export const postUpload = async (req, res) => {
       title,
       description,
       fileUrl,
+      owner: _id,
       hashtags: Video.formatHashtags(hashtags),
     });
     console.log(req.file);

@@ -9,7 +9,8 @@ const videoSchema = new mongoose.Schema({
   meta: {
     views: { type: Number, default: 0, required: true },
     rating: { type: Number, default: 0, required: true }
-  }
+  },
+  owner: { type: mongoose.Schema.Types.ObjectId, required: true, ref: "User" } // ObjectId가 model user에서 온다고 알려주기 위해 ref 사용
 });
 
 // static method를 사용하여 스키마 객체에 Custom method를 추가 및 정의 가능
