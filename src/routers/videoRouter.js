@@ -3,8 +3,8 @@ import {
   watch,
   getUpload,
   getEdit,
-  deleteVideo,
   postEdit,
+  deleteVideo,
   postUpload,
 } from "../controllers/videoController";
 

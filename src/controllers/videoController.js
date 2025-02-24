@@ -13,12 +13,11 @@ export const home = async (req, res) => {
 // Video watch controller
 export const watch = async (req, res) => {
   const { id } = req.params;
-  const video = await Video.findById(id);
-  const owner = await User.findById(video.owner);
+  const video = await Video.findById(id).populate("owner");
   if (!video) {
     return res.status(404).render("404", { pageTitle: "Video not found" });
   }
-  return res.render("watch", { pageTitle: video.title, video, owner });
+  return res.render("watch", { pageTitle: video.title, video });
 };
 
 // video Edit controller
@@ -43,7 +42,6 @@ export const postEdit = async (req, res) => {
     description,
     hashtags: Video.formatHashtags(hashtags),
   });
-  //await video.save();
   return res.redirect(`/videos/${id}`);
 }
 
@@ -67,8 +65,6 @@ export const postUpload = async (req, res) => {
       owner: _id,
       hashtags: Video.formatHashtags(hashtags),
     });
-    console.log(req.file);
-    //await video.save();
     return res.redirect("/");
   } catch (error) {
     console.log(error);

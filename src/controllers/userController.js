@@ -5,6 +5,7 @@
  */
 
 import User from "../models/User";
+import Video from "../models/Video";
 import fetch from "node-fetch";
 import bcrypt from "bcrypt";
 
@@ -163,9 +164,11 @@ export const finishGithubLogin = async (req, res) => {
   }
 };
 
+// edit User
 export const getEdit = (req, res) => {
   return res.render("edit-profile", { pageTitle: "Edit Profile" });
 }
+
 export const postEdit = async (req, res) => {
   const {
     session: {
@@ -250,11 +253,13 @@ export const postChangePassword = async (req, res) => {
 export const see = async (req, res) => {
   const { id } = req.params;
   const user = await User.findById(id);
-  if(!user) {
+  if (!user) {
     return res.status(404).render("404", { pageTitle: "User not found" });
   }
+  const videos = await Video.find({ owner: user._id })
   return res.render("users/profile", {
-    pageTitle: user.name, 
-    user
+    pageTitle: user.name,
+    user,
+    videos
   });
 }
