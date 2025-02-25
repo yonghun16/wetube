@@ -17,7 +17,9 @@ const userSchema = new mongoose.Schema({
 // bcrypt를 사용하여 password 암호화
 // Schema의  pre middleware 사용
 userSchema.pre('save', async function() {
-  this.password = await bcrypt.hash(this.password, 5);
+  if(this.isModified("password")){ // password가 변경된 경우만 암호화
+    this.password = await bcrypt.hash(this.password, 5);
+  }
 })
 
 // mongoose Model 등록 (userSchema 사용)
