@@ -93,7 +93,7 @@ export const postUpload = async (req, res) => {
 // Video delete controller
 export const deleteVideo = async (req, res) => {
   const { id } = req.params;
-  const {
+  const {                 // const _id = req.session.user._id; 랑 동일
     user: { _id },
   } = req.session;
   const video = await Video.findById(id);
