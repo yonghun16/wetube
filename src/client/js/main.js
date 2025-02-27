@@ -1,1 +1,2 @@
-alert("Hello");
+import "../scss/styles.scss"
+console.log("hello")
