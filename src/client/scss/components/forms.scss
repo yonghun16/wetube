@@ -1,6 +1,7 @@
 form {
   max-width: 420px;
   margin: 0 auto;
+
   &:not(.search__form) {
     padding: 30px;
     background-color: rgba($color: $bg, $alpha: 0.7);
@@ -9,7 +10,8 @@ form {
   }
 }
 
-input:not(input[type="range"]) {
+input:not(input[type="range"]),
+input[type="submit"] {
   all: unset;
   padding: 15px 20px;
   border-radius: 5px;
@@ -19,6 +21,7 @@ input:not(input[type="range"]) {
   font-size: 16px;
   color: white;
   width: 90%;
+
   &::placeholder {
     color: rgba(255, 255, 255, 0.7);
   }
@@ -28,9 +31,19 @@ input[type="submit"],
 .social__btn {
   border-radius: 5px;
   padding: 12px 20px;
-  background-color: white;
-  color: rgba($color: $red, $alpha: 1);
-  text-align: center;
+  background-color: white !important;
+  color: rgba($color: $red, $alpha: 1) !important;
+  text-align: center !important;
   cursor: pointer;
   display: block;
+  border: none;
+
+  &:focus {
+    outline: none;
+  }
+
+  &:disabled {
+    opacity: 0.5;
+    pointer-events: none;
+  }
 }
