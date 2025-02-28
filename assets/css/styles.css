@@ -219,18 +219,18 @@ header .header__avatar {
   border-radius: 50%;
 }
 
-form form {
+form {
   max-width: 420px;
   margin: 0 auto;
 }
-form form:not(.search__form) {
+form:not(.search__form) {
   padding: 30px;
   background-color: rgba(14, 17, 23, 0.7);
   border-radius: 10px;
   border: 1px solid rgba(255, 255, 255, 0.1);
 }
 
-input {
+input:not(input[type=range]) {
   all: unset;
   padding: 15px 20px;
   border-radius: 5px;
@@ -241,7 +241,7 @@ input {
   color: white;
   width: 90%;
 }
-input::placeholder {
+input:not(input[type=range])::placeholder {
   color: rgba(255, 255, 255, 0.7);
 }
 
