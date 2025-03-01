@@ -20,16 +20,16 @@ block content
         span#fullScreen
           i.fas.fa-expand
 
-  // div
-  //   p=video.description
-  //   small=video.createdAt
-  // div
-  //   small Uploaded by 
-  //     a(href=`/users/${video.owner._id}`)=video.owner.name
-  // if String(video.owner._id) === String(loggedInUser._id)
-  //   a(href=`${video.id}/edit`) Edit Video &rarr;
-  //   br
-  //   a(href=`${video.id}/delete`) Delete Video &rarr;
+  div.video__data
+    p.video__title=video.title
+    small.video__createdAt=new Date(video.createdAt).toLocaleDateString("ko-kr", {weekday: 'long', year: 'numeric', month: 'long', day: 'numeric'})
+    br
+    small.video__owner Uploaded by 
+      a(href=`/users/${video.owner._id}`)=video.owner.name
+  if String(video.owner._id) === String(loggedInUser._id)
+    a(href=`${video.id}/edit`) Edit Video &rarr;
+    br
+    a(href=`${video.id}/delete`) Delete Video &rarr;
 
 block scripts
   script(src="/static/js/videoPlayer.js")

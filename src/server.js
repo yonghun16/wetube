@@ -1,5 +1,6 @@
 import express from "express"
 import morgan from "morgan"
+import flash from "express-flash"
 import session from "express-session"
 import MongoStore from "connect-mongo"
 import rootRouter from "./routers/rootRouter"
@@ -28,6 +29,7 @@ app.use(session({
   store: MongoStore.create({ mongoUrl: process.env.DB_URL }),
 }))
 
+app.use(flash());
 app.use(localsMiddleware)  // local 미들웨어
 app.use("/uploads", express.static("uploads")) // uploads 폴더에 있는 파일을 클라이언트가 직접 접근할 수 있도록 함.
 app.use("/static", express.static("assets"))

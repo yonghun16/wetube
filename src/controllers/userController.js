@@ -3,7 +3,6 @@
  * 회원가입, 로그인, 회원정보, 로그아웃 같은 유저활동에 관한 req, res 처리
  * pug로 render 
  */
-
 import User from "../models/User";
 import fetch from "node-fetch";
 import bcrypt from "bcrypt";
@@ -203,6 +202,7 @@ export const logout = (req, res) => {
 
 export const getChangePassword = (req, res) => {
   if (req.session.user.socialOnly === true) {
+    req.flash("error", "Can't change password.");
     return res.redirect("/");
   }
   return res.render("users/change-password", { pageTitle: "Change Password" });
@@ -240,6 +240,7 @@ export const postChangePassword = async (req, res) => {
   const user = await User.findById(_id);
   user.password = newPassword;
   // user.save()의 middleware로 bcrypt.hash가 있어 save()만 해도 암호화
+  req.flash("info", "Password updated");
   await user.save()
 
   // session 업데이트(비밀번호를 연속해서 다시 고칠 경우 등 고려)
@@ -252,15 +253,19 @@ export const postChangePassword = async (req, res) => {
 export const see = async (req, res) => {
   const { id } = req.params;
   const user = await User.findById(id).populate({
-    path: "videos",
-    populate: {
-      path: "owner",
-      model: "User",
-    },
-  });
+      path: "videos",
+      populate: {
+        path: "owner",
+        model: "User",
+      },
+    });
   if (!user) {
     return res.status(404).render("404", { pageTitle: "User not found" });
   }
+console.log("req.params.id:", req.params.id);
+console.log("req.body.id:", req.body.id);
+console.log("req.query.id:", req.query.id);
+
   return res.render("users/profile", {
     pageTitle: user.name,
     user,

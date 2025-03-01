@@ -11,6 +11,7 @@ const userSchema = new mongoose.Schema({
   password: { type: String },
   name: { type: String, required: true },
   location: String,
+  comments: [{ type: mongoose.Schema.Types.ObjectId, ref: "Comment" }],
   videos: [{ type: mongoose.Schema.Types.ObjectId, ref: "Video" }], // ObjectId가 Video 컬렉션의 문서를 참조 위해 ref 사용
 });
 
