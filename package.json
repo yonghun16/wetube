@@ -9,7 +9,14 @@
   },
   "scripts": {
     "dev:server": "nodemon",
-    "dev:assets": "webpack"
+    "dev:assets": "webpack --watch --mode=development",
+    "dev": "npm run dev:server & npm run dev:assets",
+
+    "build:server": "babel src -d dist --ignore src/client",
+    "build:assets": "webpack --mode=production",
+    "build": "npm run build:server && npm run build:assets",
+
+    "start": "node dist/init.js"
   },
   "author": "Frontend16",
   "license": "MIT",

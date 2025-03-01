@@ -18,6 +18,7 @@ app.set("views", process.cwd() + "/src/views")
 
 app.use(logger)
 app.use(express.urlencoded({ extended: true }))
+app.use(express.json());
 
 // session 미들웨어
 // app.use(session())를 사용하면, Express의 req 객체에 session 속성이 추가됨. 이를 통해 요청(request) 간에 데이터를 유지 가능

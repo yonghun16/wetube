@@ -53,7 +53,7 @@ const handleDownload = async () => {
     '00:00:02',
     '-frames:v',
     '1',
-    files.thumb
+    files.thumb,
   ]);
 
   const mp4File = await ffmpeg.readFile(files.output);
@@ -70,9 +70,9 @@ const handleDownload = async () => {
   downloadFile(thumbUrl, "MyThumbnail.jpg");
 
 
-  await ffmpeg.ullink(files.input);
-  await ffmpeg.ullink(files.output);
-  await ffmpeg.ullink(files.thumb);
+  await ffmpeg.deleteFile(files.input);
+  await ffmpeg.deleteFile(files.output);
+  await ffmpeg.deleteFile(files.thumb);
 
   URL.revokeObjectURL(mp4Url);
   URL.revokeObjectURL(thumbUrl);

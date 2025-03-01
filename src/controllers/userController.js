@@ -4,7 +4,6 @@
  * pug로 render 
  */
 import User from "../models/User";
-import fetch from "node-fetch";
 import bcrypt from "bcrypt";
 
 // get 회원가입
