@@ -2,6 +2,7 @@
 .video-mixin {
   .video-mixin__thumb {
     height: 140px;
+    min-width: 200px;
     border-radius: 7px;
     width: 100%;
     background-color: ivory;

@@ -21,26 +21,36 @@ block content
                     i.fas.fa-expand
 
     div.video__data
-        p.video__title=video.title
-        small.video__owner Uploaded by 
-            a(href=`/users/${video.owner._id}`)=video.owner.name
-        small.video__createdAt=new Date(video.createdAt).toLocaleDateString("ko-kr", {weekday: 'long', year: 'numeric', month: 'long', day: 'numeric'})
-        if String(video.owner._id) === String(loggedInUser._id)
-            a(href=`${video.id}/edit`) Edit Video &rarr;
-            br
-            a(href=`${video.id}/delete`) Delete Video &rarr;
+        div.video__data-header
+            p.video__title=video.title
+            p.video__edits
+                if String(video.owner._id) === String(loggedInUser._id)
+                    a(href=`${video.id}/edit`)
+                        i.fas.fa-edit
+                    a(href=`${video.id}/delete`)
+                        i.fas.fa-trash
+        div.video__data-body
+            div.video_avatar
+                a(href=`/users/${video.owner._id}`)
+                    img.header__avatar(src="/" + video.owner.avatarUrl)
+            div.video__data__info
+                small.video__owner
+                    a(href=`/users/${video.owner._id}`)=video.owner.name
+                small.video__createdAt=new Date(video.createdAt).toLocaleDateString("ko-kr", {weekday: 'long', year: 'numeric', month: 'long', day: 'numeric'})
     if loggedIn
         div.video__add-comments
             form.video__comment-form#commentForm
-                textarea(cols="30", rows="10", placeholder="Write a nice commment...")
-                button Add Comment
+                input(type=text, class="new-comment", placeholder="댓글 추가...")
+                button 댓글
     div.video__comments
         ul
             each comment in video.comments.reverse()
                 li.video__comment(data-id=comment.id)
-                    i.fas.fa-comment
-                    span  #{comment.text}
-                    span ❌
+                    div
+                        i.fas.fa-comment
+                        span  #{comment.text}
+                    div
+                        div.delete-comment ❌
 
 block scripts
     script(src="/static/js/videoPlayer.js")
