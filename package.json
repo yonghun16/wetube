@@ -11,11 +11,9 @@
     "dev:server": "nodemon",
     "dev:assets": "webpack --watch --mode=development",
     "dev": "npm run dev:server & npm run dev:assets",
-
     "build:server": "babel src -d dist --ignore src/client",
     "build:assets": "webpack --mode=production",
     "build": "npm run build:server && npm run build:assets",
-
     "start": "node dist/init.js"
   },
   "author": "Frontend16",
@@ -46,6 +44,7 @@
     "@babel/core": "^7.26.0",
     "@babel/node": "^7.26.0",
     "@babel/preset-env": "^7.26.0",
+    "@flydotio/dockerfile": "^0.7.8",
     "babel-loader": "^9.2.1",
     "css-loader": "^7.1.2",
     "mini-css-extract-plugin": "^2.9.2",
