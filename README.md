@@ -12,9 +12,15 @@
   <li>
       노마드코더 Wetube 클론코딩
   </li>
-	<li>
-		Single-page
-	</li>
+  <li>
+	Github 인증 로그인
+  </li>
+  <li>
+	몽고디비 연동, express 라우팅
+  </li>
+  <li>
+	Single-page
+  </li>
 </ul>
 
 </br>
